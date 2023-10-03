@@ -18,6 +18,6 @@ html,body {
   
   canvas {
     background-color: rgb(51, 201, 141);
-    width: 100%;
+    width: 800px;
     height: 600px;
   }
