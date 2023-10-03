@@ -1,0 +1,10 @@
+const ninjaImage = document.querySelector('#ninja');
+const starImage = document.querySelector('#star');
+const sushiImage = document.querySelector('#sushi');
+const game = document.querySelector('#game');
+const score = document.querySelector('#score');
+const status = document.querySelector('#status');
+const ctx = game.getContext('2d');
+let ninja;
+let star;
+let sushi;
