@@ -14,8 +14,8 @@ let sushi;
 // EVENT LISTENERS
 //having the ninja move with mouse movement
 const mouse = {
-    x: 0,
-    y: 0
+    x: 400,
+    y: 550
 }
 game.addEventListener("mousemove", (e) => {
     mouse.x = e.offsetX;
@@ -38,7 +38,7 @@ class Player {
         this.height = height;
         this.alive = true;
         //rendering Ninja on canvas
-        this.render = function (x,y) {
+        this.render = function (x, y) {
             ctx.drawImage(this.playerImage, x, y, this.width, this.height);
         }
     }
@@ -76,36 +76,49 @@ class Projectile {
         this.width = width;
         this.height = height;
         //rendering and making the ninja star to go across the canvas(game)
-        this.render = function(x, y) {
+        this.render = function (x, y) {
             this.travelingSpeed += this.traveling;
             this.x += this.speedX + this.travelingSpeed;
             ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
     }
 }
+
+// ====================== HELPER FUNCTIONS ======================= //
+// const targetArray = [];   
+// for (i = 0; i < totalTarget; i ++) {
+//     addTarget();
+// }
+
+// function addTarget() {
+//     }
+// resetTarget(target);
+// targetArray.push(target);
+
+
 // ====================== GAME PROCESSES ======================= //
 //creating a new player, new target instance, and new projectile instance
 const player = new Player(ninjaImage, 350, 500, 100, 100);
-const target = new Target (sushiImage, 50, 50, 50, 50);
-const projectile = new Projectile (starImage, 50, 50, 50, 50);
+const target = new Target(sushiImage, 50, 50, 50, 50);
+const projectile = new Projectile(starImage, 50, 50, 50, 50);
 
 //create gameLoop function to keep target moving at set interval
 function gameLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
     //create boundaries for the ninja within the canvas(game)
-    if (mouse.x <= player.width/2) {
-        mouse.x = player.width/2;
+    if (mouse.x <= player.width / 2) {
+        mouse.x = player.width / 2;
     }
-    if(mouse.x >= game.width - (player.width/2)) {
-        mouse.x = game.width - (player.width/2);
+    if (mouse.x >= game.width - (player.width / 2)) {
+        mouse.x = game.width - (player.width / 2);
     }
-    if (mouse.y <= player.height/2) {
-        mouse.y = player.height/2;
+    if (mouse.y <= player.height / 2) {
+        mouse.y = player.height / 2;
     }
-    if(mouse.y >= game.height - (player.height/2)) {
-        mouse.y = game.height - (player.height/2);
+    if (mouse.y >= game.height - (player.height / 2)) {
+        mouse.y = game.height - (player.height / 2);
     }
-    player.render(mouse.x - (player.width/2), mouse.y - (player.height/2));
+    player.render(mouse.x - (player.width / 2), mouse.y - (player.height / 2));
     target.render();
     projectile.render();
 }
