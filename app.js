@@ -12,14 +12,15 @@ let sushi;
 
 // ====================== PAINT INTIAL SCREEN ======================= //
 // EVENT LISTENERS
-document.addEventListener('mousemove', function (e) {
-    let ninjaImage = document.querySelector('#ninja');
-    let x = e.offsetX;
-    let y = e.offsetY;
-    ninjaImage.style.left = x + 'px';
-    ninjaImage.style.top = y + 'px';
-})
-
+//having the ninja move with mouse movement
+const mouse = {
+    x: 0,
+    y: 0
+}
+game.addEventListener("mousemove", (e) => {
+    mouse.x = e.offsetX;
+    mouse.y = e.offsetY
+});
 // ====================== SETUP FOR CANVAS RENDERING ======================= //
 // 2D rendering context for canvas element
 // This is used for drawing shapes, text, images, etc.
@@ -37,8 +38,8 @@ class Player {
         this.height = height;
         this.alive = true;
         //rendering Ninja on canvas
-        this.render = function () {
-            ctx.drawImage(this.playerImage, this.x, this.y, this.width, this.height);
+        this.render = function (x,y) {
+            ctx.drawImage(this.playerImage, x, y, this.width, this.height);
         }
     }
 }
@@ -67,13 +68,25 @@ class Target {
 const player = new Player(ninjaImage, 350, 500, 100, 100);
 const target = new Target (sushiImage, 50, 50, 50, 50);
 
-//crate gameLoop function to keep target moving at set interval
+//create gameLoop function to keep target moving at set interval
 function gameLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
-    player.render();
+    //create boundaries for the ninja within the canvas(game)
+    if (mouse.x <= player.width/2) {
+        mouse.x = player.width/2;
+    }
+    if(mouse.x >= game.width - (player.width/2)) {
+        mouse.x = game.width - (player.width/2);
+    }
+    if (mouse.y <= player.height/2) {
+        mouse.y = player.height/2;
+    }
+    if(mouse.y >= game.height - (player.height/2)) {
+        mouse.y = game.height - (player.height/2);
+    }
+    player.render(mouse.x - (player.width/2), mouse.y - (player.height/2));
     target.render();
 }
 
 let runGame = setInterval(gameLoop, 60);
 
- 
