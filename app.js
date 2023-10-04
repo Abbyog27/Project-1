@@ -63,10 +63,31 @@ class Target {
         }
     }
 }
+
+class Projectile {
+    constructor(image, x, y, width, height) {
+        this.image = image;
+        this.x = x;
+        this.y = y;
+        this.speedX = 0;
+        this.speedY = 0;
+        this.traveling = 0.15;
+        this.travelingSpeed = 0;
+        this.width = width;
+        this.height = height;
+        //rendering and making the ninja star to go across the canvas(game)
+        this.render = function(x, y) {
+            this.travelingSpeed += this.traveling;
+            this.x += this.speedX + this.travelingSpeed;
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        }
+    }
+}
 // ====================== GAME PROCESSES ======================= //
-//creating a new player and new target instance
+//creating a new player, new target instance, and new projectile instance
 const player = new Player(ninjaImage, 350, 500, 100, 100);
 const target = new Target (sushiImage, 50, 50, 50, 50);
+const projectile = new Projectile (starImage, 50, 50, 50, 50);
 
 //create gameLoop function to keep target moving at set interval
 function gameLoop() {
@@ -86,6 +107,7 @@ function gameLoop() {
     }
     player.render(mouse.x - (player.width/2), mouse.y - (player.height/2));
     target.render();
+    projectile.render();
 }
 
 let runGame = setInterval(gameLoop, 60);
