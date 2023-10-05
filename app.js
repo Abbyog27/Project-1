@@ -85,15 +85,25 @@ class Projectile {
 }
 
 // ====================== HELPER FUNCTIONS ======================= //
-// const targetArray = [];   
-// for (i = 0; i < totalTarget; i ++) {
-//     addTarget();
+//creat array for new target instances
+// let targetArray = [];
+// //create loop within function for target replication
+// function createTarget(startX, startY) {
+//     let target = [];
+//     for ( let i = 0; i < 10; i++) {
+//         let target = new Target(target.image, startX + i * 60, startY);
+//         targetArray.push(target);
+// }
+// return target;
 // }
 
-// function addTarget() {
-//     }
-// resetTarget(target);
-// targetArray.push(target);
+// //function to randomly display target 
+// function randomTarget() {
+//     let target = Math.floor(Math.random() * targetArray.length);
+//     let newTarget = targetArray[target];
+    
+// }
+// setInterval(randomTarget, 1000);
 
 
 // ====================== GAME PROCESSES ======================= //
@@ -125,3 +135,28 @@ function gameLoop() {
 
 let runGame = setInterval(gameLoop, 60);
 
+// ====================== COLLISION DETECTION ======================= //
+//detecting the sushi hit and updating score
+function detectSushiHit(player, target) {
+    let hitTarget = (
+        player.y + player.height > target.y && 
+        player.y < target.y + target.height &&
+        player.x + player.width > target.x &&
+        player.x < target.x + target.width
+    );
+    if (hitTarget) {
+        //add 50 point to the current score
+        let newScore = Number(score.textContent) = 50;
+        score.textContent = newScore;
+
+        if (Number(score.textContent === 500)) {
+            alert ("You're the ultimate Sushi Ninja");
+            ctx.clearRect(0, 0, game.width, game.height);
+            score.textContent = 0;
+        }
+        //return a player
+        return player();
+    } else {
+        return false;
+    }
+}
