@@ -165,4 +165,16 @@ function detectSushiHit(player, target) {
 //start game on start screen
 function startGame() {
     console.log('start game');
-}
+    // gameLoop.start();
+ }
+
+// startGame() {
+//     this.toggleScreen('start-screen', false);
+//     this.toggleScreen('canvas', true);
+// }
+
+// toggleScreen(id, toggle) {
+//     let gameScreen = document.getElementById(id);
+//     let display = (toggle) ? 'block' : 'none';
+//     gameScreen.style.display = display;
+// }

@@ -11,9 +11,10 @@ html,body {
     background-repeat: space;
   }
   
-  h1, h2 {
+  h1 {
     font-family: monospace;
-    color: red;
+    color: rgb(9, 54, 177);
+    font-size: 30px;
   }
   
   canvas {
@@ -21,3 +22,16 @@ html,body {
     width: 800px;
     height: 600px;
   }
+   
+  p {
+    display: inline-block;
+    font-size: 25px;
+    position: relative;
+    padding-top: 10px;
+  }
+
+  #start {
+    position: relative;
+  }
+
+  
