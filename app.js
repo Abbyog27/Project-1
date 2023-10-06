@@ -84,26 +84,7 @@ class Projectile {
     }
 }
 
-// ====================== HELPER FUNCTIONS ======================= //
-//creat array for new target instances
-// let targetArray = [];
-// //create loop within function for target replication
-// function createTarget(startX, startY) {
-//     let target = [];
-//     for ( let i = 0; i < 10; i++) {
-//         let target = new Target(target.image, startX + i * 60, startY);
-//         targetArray.push(target);
-// }
-// return target;
-// }
 
-// //function to randomly display target 
-// function randomTarget() {
-//     let target = Math.floor(Math.random() * targetArray.length);
-//     let newTarget = targetArray[target];
-    
-// }
-// setInterval(randomTarget, 1000);
 
 
 // ====================== GAME PROCESSES ======================= //
@@ -135,6 +116,26 @@ function gameLoop() {
 
 let runGame = setInterval(gameLoop, 60);
 
+// ====================== HELPER FUNCTIONS ======================= //
+//creat array for new target instances
+// let targetArray = [];
+// //create loop within function for target replication
+// function createTarget(startX, startY) {
+//     let target = [];
+//     for ( let i = 0; i < 10; i++) {
+//         let target = new Target(target.image, startX + i * 60, startY);
+//         targetArray.push(target);
+// }
+// return target;
+// }
+
+// //function to randomly display target 
+// function randomTarget() {
+//     let target = Math.floor(Math.random() * targetArray.length);
+//     target.render() = targetArray[target];
+//    console.log(target);
+// }
+// setInterval(randomTarget, 1000);
 // ====================== COLLISION DETECTION ======================= //
 //detecting the sushi hit and updating score
 function detectSushiHit(player, target) {
@@ -159,4 +160,9 @@ function detectSushiHit(player, target) {
     } else {
         return false;
     }
+}
+
+//start game on start screen
+function startGame() {
+    console.log('start game');
 }

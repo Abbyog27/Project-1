@@ -7,6 +7,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="start-screen" class="screen">
+        <button onclick="startGame()">Start Game</button>
+        <h1>Instructions</h1>
+        <p>Become the ultimate sushi ninja!<br>
+        Attempt to get as many sushi as you can. Each one will get you 50 points.<br>
+        Beware of the ninja stars. If you get hit, it's game over.<br>
+        Get to 500 points and you will be the champion!!
+    </p>
+    </div>
     <div class="imageContainer">
     <img src="./ninja-image.jpg" alt="ninja" id="ninja" style="display: none;">
     <img src="ninja-star-image.webp" alt="ninja-star" id="star" style="display: none;">
@@ -15,7 +24,7 @@
     </div>
     <div id="container">
         <main>
-            <canvas id="game"><!-- Let's Play!! --></canvas>
+            <canvas id="game" style="display:none"><!-- Let's Play!! --></canvas>
         </main>
         <aside id="btm-left"><h2 id="score">Score: 0</h2></aside>
         <aside id="btm-right"><h2 id="status">Sushi Time!</h2></aside>
