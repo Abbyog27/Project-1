@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!-- saved from url=(0095)file:///Users/pamelaolaguivel/Desktop/GENERAL-ASSEMBLY/unit-1/deliverables/Project-1/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sushi Ninja</title>
+    <link rel="stylesheet" href="./Sushi Ninja_files/style.css">
+</head>
+<body background="./Sushi Ninja_files/ninja-sushi-background.jpg">
+    <div id="start-screen" class="screen">
+        <button id="start" onclick="startGame()">Start Game</button>
+        <h1>Instructions</h1>
+        <p>Become the ultimate sushi ninja!<br>
+        Attempt to get as many sushi as you can. Each one will get you 50 points.<br>
+        Beware of the ninja stars. If you get hit, it's game over.<br>
+        Get to 500 points and you will be the champion!!
+        </p>
+    </div>
+    <div class="imageContainer">
+    <img src="./Sushi Ninja_files/ninja-image.jpg" alt="ninja" id="ninja" style="display: none;">
+    <img src="./Sushi Ninja_files/ninja-star-image.webp" alt="ninja-star" id="star" style="display: none;">
+    <img src="./Sushi Ninja_files/sushi.png" alt="sushi" id="sushi" style="display: none;">
+    </div>
+    <div id="container">
+        <main>
+            <canvas id="game" style="display:none" height="auto" width="auto">
+                <aside id="btm-left"><h2 id="score">Score: 0</h2></aside>
+                <aside id="btm-right"><h2 id="status">Sushi Time!</h2></aside>
+            </canvas>
+        </main>
+      </div>
+      <script src="./Sushi Ninja_files/app.js"></script>
+
+</body></html>

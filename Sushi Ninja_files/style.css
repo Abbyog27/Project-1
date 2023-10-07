@@ -1,0 +1,35 @@
+html,body {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: auto;
+  height: 1000; 
+  /* text-align: center; */
+}
+  
+  /* body {
+    padding-top: 1em;
+    text-align: center;
+    background-color: white;
+    background-size: cover;
+    background-repeat: space;
+  }
+  
+  h1,h2 {
+    font-family: monospace;
+    color: rgb(9, 54, 177);
+    font-size: 30px;
+  }
+  
+  canvas {
+    background-color: rgb(51, 201, 141);
+  }
+   
+  p {
+    display: inline-block;
+    font-size: 25px;
+    position: relative;
+    padding-top: 10px;
+  } */
+
+  
