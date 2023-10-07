@@ -56,7 +56,7 @@ class Target {
         this.y = y;
         this.speedX = 0;
         this.speedY = 0;
-        this.gravity = 0.05;
+        this.gravity = 2;
         this.gravitySpeed = 0;
         this.width = width;
         this.height = height;
@@ -76,7 +76,7 @@ class Projectile {
         this.y = y;
         this.speedX = 0;
         this.speedY = 0;
-        this.traveling = 0.15;
+        this.traveling = 5;
         this.travelingSpeed = 0;
         this.width = width;
         this.height = height;
@@ -96,6 +96,23 @@ const player = new Player(ninjaImage, 350, 500, 100, 100);
 // const target = new Target(sushiImage, 50, 50, 50, 50);
 // const projectile = new Projectile(starImage, 50, 50, 50, 50);
 
+const targets = [];
+function targetSetup() {
+    const targetRandomX = Math.floor(Math.random() * window.innerWidth);
+    const targetRandomY = 0;
+    const target = new Target(sushiImage, targetRandomX, targetRandomY, 50, 50);
+    targets.push(target);
+}
+
+const projectiles = [];
+function projectileSetup() {
+    const projectileRandomX = 0;
+    const projectileRandomY = Math.floor(Math.random() * window.innerHeight);
+    const projectile = new Projectile(starImage, projectileRandomX, projectileRandomY, 50, 50);
+    projectiles.push(projectile);
+}
+
+
 //create gameLoop function to keep target moving at set interval
 function gameLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
@@ -114,91 +131,55 @@ function gameLoop() {
         mouse.y = game.height - (player.height / 2);
     }
     player.render(mouse.x - (player.width / 2), mouse.y - (player.height / 2));
-    //
-    // const targetRandomX = Math.floor(Math.random() * window.innerWidth);
-    // const targetRandomY = Math.floor(Math.random() * window.innerHeight);
-    // const target = new Target(sushiImage, targetRandomX, targetRandomY, 50, 50);
-    // target.render();
-    // //
-    // const projectileRandomX = Math.floor(Math.random() * window.innerWidth);
-    // const projectileRandomY = Math.floor(Math.random() * window.innerHeight);
-    // const projectile = new Projectile(starImage, projectileRandomX, projectileRandomY, 50, 50);
-    // projectile.render();
+    
+    // render all targets
+    for(let i =0; i< targets.length ; i++) {
+        targets[i].render();
+    }
+
+     // render all starts
+     for(let i =0; i< projectiles.length ; i++) {
+         projectiles[i].render();
+     }
 }
 
 function displayGameBoard() {
-    startPage.style.display ="none";
+    startPage.style.display = "none";
     game.style.display = "block";
 }
 
-// ====================== HELPER FUNCTIONS ======================= //
-//creat array for new target instances
-// let targetArray = [];
-// //create loop within function for target replication
-// function createTarget(startX, startY) {
-//     let target = [];
-//     for ( let i = 0; i < 10; i++) {
-//         let target = new Target(target.image, startX + i * 60, startY);
-//         targetArray.push(target);
-// }
-// return target;
-// }
-
-// //function to randomly display target 
-// function randomTarget() {
-//     let target = Math.floor(Math.random() * targetArray.length);
-//     target.render() = targetArray[target];
-//    console.log(target);
-// }
-// setInterval(randomTarget, 1000);
-
-const newTarget = new Target()
-let randomSet = new Set();
-let usedSet = new Set();
-let targetArray = []
-function createRandomTarget() {
-    for (let i = 0; i < 10; i++) {
-        let target = new Target(target.image, startX + i * 60, startY);
-        targetArray.push(target);
-        if (usedSet.size === 10) {
-            usedSet.clear();
-        }
-        while (randomSet.size < 10) {
-            let randNum = Math.floor(Math.random() * targetArray.length);
-            if (!usedSet.has(randNum)) {
-                randomSet.add(randNum);
-            }
-        }
-    }
-}
 // ====================== COLLISION DETECTION ======================= //
 //detecting the sushi hit and updating score
-function detectSushiHit(player, target) {
-    let hitTarget = (
-        player.y + player.height > target.y &&
-        player.y < target.y + target.height &&
-        player.x + player.width > target.x &&
-        player.x < target.x + target.width
-    );
-    if (hitTarget) {
-        //add 50 point to the current score
-        let newScore = Number(score.textContent) = 50;
-        score.textContent = newScore;
+// function detectSushiHit(player, target) {
+//     let hitTarget = (
+//         player.y + player.height > target.y &&
+//         player.y < target.y + target.height &&
+//         player.x + player.width > target.x &&
+//         player.x < target.x + target.width
+//     );
+//     if (hitTarget) {
+//         //add 50 point to the current score
+//         let newScore = Number(score.textContent) = 50;
+//         score.textContent = newScore;
 
-        if (Number(score.textContent === 500)) {
-            alert("You're the ultimate Sushi Ninja");
-            ctx.clearRect(0, 0, game.width, game.height);
-            score.textContent = 0;
-        }
-        //return a player
-        return player();
-    } else {
-        return false;
-    }
-}
+//         if (Number(score.textContent === 500)) {
+//             alert("You're the ultimate Sushi Ninja");
+//             ctx.clearRect(0, 0, game.width, game.height);
+//             score.textContent = 0;
+//         }
+//         //return a player
+//         return player();
+//     } else {
+//         return false;
+//     }
+// }
 
 //start game on start screen
 function startGame() {
     displayGameBoard();
-    let runGame = setInterval(gameLoop, 500);
+    targetSetup();
+    projectileSetup();
+    setInterval(gameLoop, 200);
+    setInterval(targetSetup, 5000);
+    setInterval(projectileSetup, 4000);
 }
