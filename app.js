@@ -81,7 +81,7 @@ class Projectile {
         this.width = width;
         this.height = height;
         //rendering and making the ninja star to go across the canvas(game)
-        this.render = function (x, y) {
+        this.render = function () {
             this.travelingSpeed += this.traveling;
             this.x += this.speedX + this.travelingSpeed;
             ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
@@ -92,7 +92,7 @@ class Projectile {
 
 // ====================== GAME PROCESSES ======================= //
 //creating a new player, new target instance, and new projectile instance
-const player = new Player(ninjaImage, 350, 500, 100, 100);
+ninja = new Player(ninjaImage, 350, 500, 100, 100);
 // const target = new Target(sushiImage, 50, 50, 50, 50);
 // const projectile = new Projectile(starImage, 50, 50, 50, 50);
 
@@ -118,29 +118,39 @@ function gameLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
     //create boundaries for the ninja within the canvas(game)
     // player movement 
-    if (mouse.x <= player.width / 2) {
-        mouse.x = player.width / 2;
+    if (mouse.x <= ninja.width / 2) {
+        mouse.x = ninja.width / 2;
     }
-    if (mouse.x >= game.width - (player.width / 2)) {
-        mouse.x = game.width - (player.width / 2);
+    if (mouse.x >= game.width - (ninja.width / 2)) {
+        mouse.x = game.width - (ninja.width / 2);
     }
-    if (mouse.y <= player.height / 2) {
-        mouse.y = player.height / 2;
+    if (mouse.y <= ninja.height / 2) {
+        mouse.y = ninja.height / 2;
     }
-    if (mouse.y >= game.height - (player.height / 2)) {
-        mouse.y = game.height - (player.height / 2);
+    if (mouse.y >= game.height - (ninja.height / 2)) {
+        mouse.y = game.height - (ninja.height / 2);
     }
-    player.render(mouse.x - (player.width / 2), mouse.y - (player.height / 2));
-    
-    // render all targets
-    for(let i =0; i< targets.length ; i++) {
-        targets[i].render();
-    }
+    ninja.render(mouse.x - (ninja.width / 2), mouse.y - (ninja.height / 2));
+    console.log(ninja.x, ninja.y, mouse.x, mouse.y);
 
-     // render all starts
-     for(let i =0; i< projectiles.length ; i++) {
-         projectiles[i].render();
-     }
+    if (ninja.alive) {
+        ninja.render();
+        // render all targets
+        for (let i = 0; i < targets.length; i++) {
+            sushi = targets[i]
+            sushi.render();
+            console.log(sushi);
+            let hit = detectTargetHit(ninja, sushi);
+        }
+
+        // render all projectiles
+        for (let i = 0; i < projectiles.length; i++) {
+            star = projectiles[i];
+            star.render();
+            console.log(star);
+            let hit = detectProjHit(ninja, star)
+        }
+    }
 }
 
 function displayGameBoard() {
@@ -150,36 +160,49 @@ function displayGameBoard() {
 
 // ====================== COLLISION DETECTION ======================= //
 //detecting the sushi hit and updating score
-// function detectSushiHit(player, target) {
-//     let hitTarget = (
-//         player.y + player.height > target.y &&
-//         player.y < target.y + target.height &&
-//         player.x + player.width > target.x &&
-//         player.x < target.x + target.width
-//     );
-//     if (hitTarget) {
-//         //add 50 point to the current score
-//         let newScore = Number(score.textContent) = 50;
-//         score.textContent = newScore;
+function detectTargetHit(player, target) {
+    let hitTest = (
+        mouse.y + player.height > target.y &&
+        mouse.y < target.y + target.height &&
+        mouse.x + player.width > target.x &&
+        mouse.x < target.x + target.width
+    ) 
+    if (hitTest) {
+        console.log('it works');
+        //add 100 points to the current score
+        let newScore = Number(score.textContent) + 100;
+        score.textContent = newScore;
 
-//         if (Number(score.textContent === 500)) {
-//             alert("You're the ultimate Sushi Ninja");
-//             ctx.clearRect(0, 0, game.width, game.height);
-//             score.textContent = 0;
-//         }
-//         //return a player
-//         return player();
-//     } else {
-//         return false;
-//     }
-// }
+        if (Number(score.textContent === 300)) {
+            alert ('You WIN');
+            ctx.clearRect(0, 0, game.width, game.height);
+            score.textContent = 0;
+        }
+        //return a new Shrek with the addNewShrek function
+        return addNewShrek();
+    } else {
+        return false;
+    }
+}
+function detectProjHit(player, projectile) {
+    if (
+        mouse.y + player.height > projectile.y &&
+        mouse.y < projectile.y + projectile.height &&
+        mouse.x + player.width > projectile.x &&
+        mouse.x < projectile.x + projectile.width
+    ) {
+        console.log('hit');
+    }
+    return false;
+    console.log(target);
 
+}
 //start game on start screen
 function startGame() {
     displayGameBoard();
     targetSetup();
     projectileSetup();
-    setInterval(gameLoop, 200);
+    setInterval(gameLoop, 500);
     setInterval(targetSetup, 5000);
     setInterval(projectileSetup, 4000);
 }

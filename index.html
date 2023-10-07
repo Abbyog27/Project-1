@@ -23,14 +23,23 @@
         <img src="ninja-star-image.webp" alt="ninja-star" id="star" style="display: none;">
         <img src="sushi.png" alt="sushi" id="sushi" style="display: none;">
     </div>
-    <canvas id="game">
-        <aside id="btm-left">
-            <h2 id="score">Score: 0</h2>
+    <div id="container">
+        <aside id="top-left"><h2>Slay the Shrek</h2></aside>
+        <aside id="top-right"><h2 id="movement"></h2></aside>
+        <main>
+            <canvas id="game"><!-- play it, a game --></canvas>
+        </main>
+        <aside id="btm-left"><h2 id="score">100</h2></aside>
+        <aside id="btm-right"><h2 id="status">play the game</h2></aside>
+      </div>
+    <!-- <canvas id="game">
+        <aside>
+            <aside id="btm-left"><h2 id="score">100</h2></aside>
         </aside>
         <aside id="btm-right">
             <h2 id="status">Sushi Time!</h2>
         </aside>
-    </canvas>
+    </canvas> -->
     <script src="app.js"></script>
 </body>
 
