@@ -139,7 +139,6 @@ function gameLoop() {
         for (let i = 0; i < targets.length; i++) {
             sushi = targets[i]
             sushi.render();
-            console.log(sushi);
             let hit = detectTargetHit(ninja, sushi);
         }
 
@@ -147,7 +146,6 @@ function gameLoop() {
         for (let i = 0; i < projectiles.length; i++) {
             star = projectiles[i];
             star.render();
-            console.log(star);
             let hit = detectProjHit(ninja, star)
         }
     }
@@ -170,18 +168,14 @@ function detectTargetHit(player, target) {
     if (hitTest) {
         console.log('it works');
         //add 100 points to the current score
-        let newScore = Number(score.textContent) + 100;
+        let newScore = Number(score.textContent) + 50;
         score.textContent = newScore;
 
-        if (Number(score.textContent === 300)) {
+        if (Number(score.textContent === 500)) {
             alert ('You WIN');
             ctx.clearRect(0, 0, game.width, game.height);
             score.textContent = 0;
         }
-        //return a new Shrek with the addNewShrek function
-        return addNewShrek();
-    } else {
-        return false;
     }
 }
 function detectProjHit(player, projectile) {
@@ -191,7 +185,7 @@ function detectProjHit(player, projectile) {
         mouse.x + player.width > projectile.x &&
         mouse.x < projectile.x + projectile.width
     ) {
-        console.log('hit');
+        ctx.clear
     }
     return false;
     console.log(target);
@@ -202,7 +196,7 @@ function startGame() {
     displayGameBoard();
     targetSetup();
     projectileSetup();
-    setInterval(gameLoop, 500);
+    setInterval(gameLoop, 100);
     setInterval(targetSetup, 5000);
     setInterval(projectileSetup, 4000);
 }
