@@ -93,8 +93,6 @@ class Projectile {
 // ====================== GAME PROCESSES ======================= //
 //creating a new player, new target instance, and new projectile instance
 ninja = new Player(ninjaImage, 350, 500, 100, 100);
-// const target = new Target(sushiImage, 50, 50, 50, 50);
-// const projectile = new Projectile(starImage, 50, 50, 50, 50);
 
 const targets = [];
 function targetSetup() {
@@ -130,25 +128,25 @@ function gameLoop() {
     if (mouse.y >= game.height - (ninja.height / 2)) {
         mouse.y = game.height - (ninja.height / 2);
     }
-    ninja.render(mouse.x - (ninja.width / 2), mouse.y - (ninja.height / 2));
-    console.log(ninja.x, ninja.y, mouse.x, mouse.y);
-
     if (ninja.alive) {
-        ninja.render();
+        ninja.render(mouse.x - (ninja.width / 2), mouse.y - (ninja.height / 2));
         // render all targets
         for (let i = 0; i < targets.length; i++) {
             sushi = targets[i]
             sushi.render();
-            let hit = detectTargetHit(ninja, sushi);
-        }
-
-        // render all projectiles
-        for (let i = 0; i < projectiles.length; i++) {
-            star = projectiles[i];
-            star.render();
-            let hit = detectProjHit(ninja, star)
+            if (detectTargetHit(ninja, sushi)) {
+                targets.splice(i, 1);
+            }
         }
     }
+
+    // render all projectiles
+    for (let i = 0; i < projectiles.length; i++) {
+        star = projectiles[i];
+        star.render();
+        let hit = detectProjHit(ninja, star)
+    }
+
 }
 
 function displayGameBoard() {
@@ -164,7 +162,7 @@ function detectTargetHit(player, target) {
         mouse.y < target.y + target.height &&
         mouse.x + player.width > target.x &&
         mouse.x < target.x + target.width
-    ) 
+    )
     if (hitTest) {
         console.log('it works');
         //add 100 points to the current score
@@ -172,31 +170,32 @@ function detectTargetHit(player, target) {
         score.textContent = newScore;
 
         if (Number(score.textContent === 500)) {
-            alert ('You WIN');
             ctx.clearRect(0, 0, game.width, game.height);
             score.textContent = 0;
+            alert('You WIN');
         }
     }
+    return hitTest;
 }
+
 function detectProjHit(player, projectile) {
-    if (
+    let hitTest = (
         mouse.y + player.height > projectile.y &&
         mouse.y < projectile.y + projectile.height &&
         mouse.x + player.width > projectile.x &&
-        mouse.x < projectile.x + projectile.width
-    ) {
-        ctx.clear
+        mouse.x < projectile.x + projectile.width)
+    if (hitTest) {
+        ctx.clearRect(0, 0, game.width, game.height);
+        alert('You LOST');
     }
-    return false;
-    console.log(target);
-
+    return hitTest;
 }
 //start game on start screen
 function startGame() {
     displayGameBoard();
     targetSetup();
     projectileSetup();
-    setInterval(gameLoop, 100);
+    setInterval(gameLoop, 50);
     setInterval(targetSetup, 5000);
     setInterval(projectileSetup, 4000);
 }
