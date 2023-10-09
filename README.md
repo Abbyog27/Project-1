@@ -6,29 +6,24 @@ Getting started:
 3 Looked for and downloaded sprites for the game
 
 Goals:
-- [X ] Use HTML5 Canvas to make and add Ninja, sushis and ninja stars.
+- [X] Use HTML5 Canvas to make and add Ninja, sushis and ninja stars.
 - [X] Be able to move the ninja by moving the mouse on canvas
-- [ ] Detect a collision between the ninja and the sushi or the ninja stars
-- [ ] When the ninja collides with the sushi, remove the sushi from the screen
-- [ ] When the ninja collides with the ninja stars, remove the ninja star from the screen
-- [ ] ninja will get 50 points for every sushi they hit
-- [ ] If ninja gets hit by 3 ninja stars it's game over
+- [X] Detect a collision between the ninja and the sushi or the ninja stars
+- [X] When the ninja collides with the sushi, remove the sushi from the screen
+- [X] ninja will get 50 points for every sushi they hit and add it to score
+- [X] When the ninja collides with the ninja stars it's GAME OVER.
 
-Game instructions: Sushi Ninja is a game where you get 50 points for every sushi piece you hit. If you get to 500 points you win. Beware of the ninja stars coming at you though! If you get hit three times by any ninja stars, it is game over. Tap or slide your cursor around the screen to get as much sushi as you can while avoiding the ninja stars.
+# HOW TO PLAY
+ Sushi Ninja begins when by clicking the start game button. Move ninja by moving the mouse throughout the canvas. Player acquires 50 points for every sushi piece that is hit. Beware of the ninja stars coming accross the canvas though! Get as many points collecting sushi while avoiding the ninja stars. Once the player is hit by a ninja star it is game over. 
 
-Look at the `index.html` again. What elements will we need to access?
+# HOW IT WORKS
+This code is an implements a simple 2D game. Sushi Ninja is built using HTML, CSS, and JavaScript. The game uses the HTML5 Canvas to update the game graphics and handle player input. JavaScript is used to manage the game state and updating the player's score. The game is played by controlling a ninja image using the mouse cursor to get sushi to get points while avoiding firing ninja stars. The main logic of the game is handled in a function called `gameLoop`, which is called every 60 milliseconds using the `setInterval` method.
 
-In your `app.js` put a `console.log` and run your index.html in your browser to check that everything is linked up correctly. Once you've tested that, make a reference to a couple of things in the HTML that we'll need to access consistently.
 
-```
-* `<canvas id="game">`: This is the main piece of our game; it's where we will be rendering our game an what we will be updating.
-```javascript
-let game = document.querySelector('#game')
-```
-
-Next, we are going to set the rest of our global variables that are needed for the game `score`, `status`, `game`, `sushi` `star` and `ninja`
+Global variables needed are set for the game `start screen`,`score`, `status`, `game`, `sushi` `star` and `ninja`
 
 ```javascript
+const startPage = document.querySelector('#start-screen')
 const ninjaImage = document.querySelector('#ninja');
 const starImage = document.querySelector('#star');
 const sushiImage = document.querySelector('#sushi');
@@ -41,14 +36,9 @@ let star;
 let sushi;
 ```
 
-We do this by assigning getting the context from the canvas element and assigning it to a variable. The syntax is `canvasElement.getContext('2d')`
+### Making the Characters
 
-### Make Some Characters!
-
-It's time to make our game! So our goal is to have an `ninja` (which will be controlled by the movement of the mouse), our `sushi` (which will be randomly falling), and our `ninja stars` (which will be randomly crossing the game canvas). They will all have their image accordingly. 
-
-We will creat a class for each character which will have everything to render the ninja (player), sushi (target) and ninja star (projectile). 
-We make an instance of the class by calling it using javascript's `new`. 
+The code creates classes to handle the characters the player`ninja` (which will be controlled by the movement of the mouse), Target `sushi` (which will be randomly moving along the y-axis), and  Projectile`stars` (which will be randomly moving a long the x axis). They all have their image accordingly. 
 
 ```javascript 
 class Player {
@@ -65,43 +55,51 @@ class Player {
         }
     }
 }
+```
 
-class Target {
-    constructor(image, x, y, width, height) {
-        this.image = image;
-        this.x = x;
-        this.y = y;
-        this.speedX = 0;
-        this.speedY = 0;
-        this.gravity = 0.05;
-        this.gravitySpeed = 0;
-        this.width = width;
-        this.height = height;
-        //rendering and adding gravity so the target falls
-        this.render = function () {
-            this.gravitySpeed += this.gravity;
-            this.y += this.speedY + this.gravitySpeed;
-            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-        }
-    }
+In the game, the player aims to get as many sushi which descend on the canvas every 3 seconds and creating a continuous loop until the game is over using the `setInterval` method.
+
+create an array of targets (sushi)
+```javascript
+const targets = [];
+```
+
+creating new instances of sushi
+```javascript
+function targetSetup() {
+    const targetRandomX = Math.floor(Math.random() * window.innerWidth);
+    const targetRandomY = 0;
+    const target = new Target(sushiImage, targetRandomX, targetRandomY, 50, 50);
+    targets.push(target);
 }
+```
+rendering new sushi every 4 seconds 
+```javascript
+ setInterval(targetSetup, 4000);
+ ```
 
-class Projectile {
-    constructor(image, x, y, width, height) {
-        this.image = image;
-        this.x = x;
-        this.y = y;
-        this.speedX = 0;
-        this.speedY = 0;
-        this.traveling = 0.15;
-        this.travelingSpeed = 0;
-        this.width = width;
-        this.height = height;
-        //rendering and making the ninja star to go across the canvas(game)
-        this.render = function (x, y) {
-            this.travelingSpeed += this.traveling;
-            this.x += this.speedX + this.travelingSpeed;
-            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
-        }
+ The game detects collisions between the characters using the `detectTargetHit` and `detectProjHit` functions. It displays the player's score and updates it as they gather every sushi. It also alerts game over when the player is hit by a ninja star.
+
+ ```javascript
+ function detectTargetHit(player, target) {
+    let hitTest = (
+        mouse.y + player.height > target.y &&
+        mouse.y < target.y + target.height &&
+        mouse.x + player.width > target.x &&
+        mouse.x < target.x + target.width
+    )
+    if (hitTest) {
+        //add 50 points to the current score
+        let newScore = Number(score.textContent) + 50;
+        score.textContent = newScore;
     }
-}```
+ }
+```
+
+# Unsolved problems and future enhancements
+
+- add levels (make the sushi and ninja stars move faster) for intermediate and expert levels
+- add sound when the ninja gets the sushi
+- add sound when the ninja gets hit by the ninja star and is game over
+
+
