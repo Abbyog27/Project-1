@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body background="ninja-sushi-background.jpg">
+<body id="body" background="ninja-sushi-background.jpg">
     <div id="start-screen" class="screen">
+        <h1 id="header">Sushi Ninja!!</h1>
         <button id="start" onclick=startGame()>Start Game</button>
-        <h1>Instructions</h1>
-        <p>Sushi Time!!<br>
+        <p id="instruction">Instructions<br>
             Attempt to get as many sushi as you can, but<br>
-            beware of the ninja stars. If you get hit, it's game over!!<br>
+            beware of the ninja stars. If you get hit, it's game over<br>
             Get to 500 points to become the ultimate Sushi Nija!!
         </p>
     </div>
@@ -23,18 +23,22 @@
         <img src="ninja-star-image.webp" alt="ninja-star" id="star" style="display: none;">
         <img src="sushi.png" alt="sushi" id="sushi" style="display: none;">
     </div>
-    <div id="container">
-        <aside id="top-left"><h2>Slay the Shrek</h2></aside>
-        <aside id="top-right"><h2 id="movement"></h2></aside>
+    <div id="container" style="display: none;">
+        <aside id="top">
+            <h2>Sushi Time!!</h2>
+        </aside>
         <main>
-            <canvas id="game"><!-- play it, a game --></canvas>
+            <canvas id="game""></canvas>
         </main>
-        <aside id="btm-left"><h2 id="score">0</h2></aside>
-        <aside id="btm-right"><h2 id="status">play the game</h2></aside>
-      </div>
-    <!-- <canvas id="game">
+        <aside id="btm">
+            <h2 id="score">0</h2>
+        </aside>
+    </div>
+    <!-- <canvas id="game" style="display: none;">
         <aside>
-            <aside id="btm-left"><h2 id="score">100</h2></aside>
+            <aside id="btm-left">
+                <h2 id="score">100</h2>
+            </aside>
         </aside>
         <aside id="btm-right">
             <h2 id="status">Sushi Time!</h2>

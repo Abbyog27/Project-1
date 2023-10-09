@@ -6,12 +6,13 @@ const sushiImage = document.querySelector('#sushi');
 const game = document.querySelector('#game');
 const score = document.querySelector('#score');
 const status = document.querySelector('#status');
+const container = document.querySelector('#container');
 const ctx = game.getContext('2d');
 let ninja;
 let star;
 let sushi;
 
-// ====================== PAINT INTIAL SCREEN ======================= //
+    // ====================== PAINT INTIAL SCREEN ======================= //
 // EVENT LISTENERS
 //having the game start when you click the start button and move to canvas
 
@@ -29,9 +30,8 @@ game.addEventListener("mousemove", (e) => {
 // ====================== SETUP FOR CANVAS RENDERING ======================= //
 // 2D rendering context for canvas element
 // This is used for drawing shapes, text, images, etc.
-game.setAttribute('height', window.innerHeight);
 game.setAttribute('width', window.innerWidth);
-
+game.setAttribute('height', window.innerHeight);
 
 // ====================== ENTITIES ======================= //
 class Player {
@@ -55,15 +55,12 @@ class Target {
         this.x = x;
         this.y = y;
         this.speedX = 0;
-        this.speedY = 0;
-        this.gravity = 2;
-        this.gravitySpeed = 0;
+        this.speedY = 20;
         this.width = width;
         this.height = height;
         //rendering and adding gravity so the target falls
         this.render = function () {
-            this.gravitySpeed += this.gravity;
-            this.y += this.speedY + this.gravitySpeed;
+            this.y += this.speedY;
             ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
     }
@@ -74,16 +71,13 @@ class Projectile {
         this.image = image;
         this.x = x;
         this.y = y;
-        this.speedX = 0;
+        this.speedX = 30;
         this.speedY = 0;
-        this.traveling = 5;
-        this.travelingSpeed = 0;
         this.width = width;
         this.height = height;
         //rendering and making the ninja star to go across the canvas(game)
         this.render = function () {
-            this.travelingSpeed += this.traveling;
-            this.x += this.speedX + this.travelingSpeed;
+            this.x += this.speedX;
             ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
     }
@@ -102,7 +96,7 @@ function targetSetup() {
     targets.push(target);
 }
 
-const projectiles = [];
+let projectiles = [];
 function projectileSetup() {
     const projectileRandomX = 0;
     const projectileRandomY = Math.floor(Math.random() * window.innerHeight);
@@ -122,10 +116,10 @@ function gameLoop() {
     if (mouse.x >= game.width - (ninja.width / 2)) {
         mouse.x = game.width - (ninja.width / 2);
     }
-    if (mouse.y <= ninja.height / 2) {
+    if (mouse.y <= 80 + ninja.height / 2) {
         mouse.y = ninja.height / 2;
     }
-    if (mouse.y >= game.height - (ninja.height / 2)) {
+    if (mouse.y >= game.height - 160 - (ninja.height / 2)) {
         mouse.y = game.height - (ninja.height / 2);
     }
     if (ninja.alive) {
@@ -144,14 +138,21 @@ function gameLoop() {
     for (let i = 0; i < projectiles.length; i++) {
         star = projectiles[i];
         star.render();
-        let hit = detectProjHit(ninja, star)
+        if(detectProjHit(ninja, star)) {
+            projectiles = [];
+            startPage.style.display = "block";
+            container.style.display = "none";
+            container.style.cursor = "";
+            alert('You LOST');
+        }
     }
 
 }
 
 function displayGameBoard() {
     startPage.style.display = "none";
-    game.style.display = "block";
+    container.style.display = "block";
+    container.style.cursor = "none"
 }
 
 // ====================== COLLISION DETECTION ======================= //
@@ -179,16 +180,15 @@ function detectTargetHit(player, target) {
 }
 
 function detectProjHit(player, projectile) {
-    let hitTest = (
+    let lost = (
         mouse.y + player.height > projectile.y &&
         mouse.y < projectile.y + projectile.height &&
         mouse.x + player.width > projectile.x &&
-        mouse.x < projectile.x + projectile.width)
-    if (hitTest) {
+        mouse.x < projectile.x + projectile.width);
+    if (lost) {
         ctx.clearRect(0, 0, game.width, game.height);
-        alert('You LOST');
     }
-    return hitTest;
+    return lost;
 }
 //start game on start screen
 function startGame() {
@@ -196,6 +196,6 @@ function startGame() {
     targetSetup();
     projectileSetup();
     setInterval(gameLoop, 50);
-    setInterval(targetSetup, 5000);
-    setInterval(projectileSetup, 4000);
+    setInterval(targetSetup, 4000);
+    setInterval(projectileSetup, 2000);
 }

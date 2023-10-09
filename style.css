@@ -1,96 +1,83 @@
-/* html, body { width:100%; height:100%; }
+html,body {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
 }
 
 h1,h2 {
   font-family: monospace;
-  color: rgb(9, 54, 177);
+  color: rgb(183, 5, 11);
   font-size: 30px;
+  text-align: center
+}
+
+#header {
+  text-align: center;
+  color: rgb(225, 83, 17);
+  display: block;
+  margin: 0;
+}
+
+#start {
+  background-color: rgb(225, 83, 17)  ;
+  color: white;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 380px;
+  margin-right: 660px;
+  font-size: 20px;
+  border-radius: 50%;
+  height: 50;
+  width: 150px;
+  border:  solid white;
 }
 
 canvas {
-  background-color: rgb(51, 201, 141);
-  display: none;
+  background-color: rgb(51, 153, 201);
+   width: 100%;
+   height: 550px;
 }
 
 p {
-  display: inline-block;
   font-size: 25px;
   position: relative;
-  padding-top: 10px;
-} */
-html,body {
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  padding-top: 1em;
+  padding-top: 15px;
   text-align: center;
-  background-color: black;
-  /* background-image: url('../img/dungeonhell.png'); */
-  background-size: cover;
-  background-repeat: space;
+  color: rgb(183, 5, 11);
 }
 
-h1, h2 {
-  font-family: 'Press Start 2P', monospace;
-  /* font-family: monospace; */
-  color: goldenrod;
+
+#instruction {
+  font-size: 25px;
+  position: relative;
+  padding-top: 100px;
+  text-align: center;
+  color: rgb(225, 83, 17);
 }
 
-canvas {
-  background-color: transparent;
-  width: 100%;
-  height: 100;
-}
-
-#container {
-max-width: 50em;
-/* height: 70vh; */
-background-color: rgb(80, 239, 133);
-margin: 0 auto;
-padding: 1em;
-display: grid;
-grid-gap: 1em;
-grid-template-rows: .25fr .5fr .25fr;
-grid-template-columns: .25fr .5fr .25fr;
-grid-template-areas: "top-left top-left top-right"
-                      "game game game"
-                      "btm-left btm-right btm-right";
-}
-
-#top-left, #top-right, #btm-left, #btm-right {
+#top,#btm {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #222;
+  position: relative;
 }
 
-#top-left {
-  grid-area: top-left;
+#top {
+  grid-area: top;
 }
 
-#top-right {
-  grid-area: top-right;
-  /* background-color: #222; */
-  /* background-image: url('../img/funky-lines.png'); */
+#btm {
+  grid-area: btm;
 }
 
 main {
   grid-area: game;
-}
-
-
-#btm-left {
-  grid-area: btm-left;
-  /* background-color: #222; */
-}
-
-#btm-right {
-  grid-area: btm-right;
-  /* background-color: #222; */
 }
