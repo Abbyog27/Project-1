@@ -8,6 +8,7 @@ const score = document.querySelector('#score');
 const status = document.querySelector('#status');
 const container = document.querySelector('#container');
 const ctx = game.getContext('2d');
+const intervalArray = [];
 let ninja;
 let star;
 let sushi;
@@ -122,17 +123,22 @@ function gameLoop() {
             }
         }
     }
-    // render all projectiles
+    // render all projectiles(ninja stars)
     for (let i = 0; i < projectiles.length; i++) {
         star = projectiles[i];
         star.render();
-        //detect collision between star and ninja. Go back to start page to start new game.
+        //detect collision between star and ninja
         if (detectProjHit(ninja, star)) {
-            // projectiles = [];
+            projectiles = [];
+        //clearing each interval to end game 
+        intervalArray.forEach(function endGame(interval) {
+            clearInterval(interval);
+        });
+            alert('GAME OVER');
+            //displaying start page once game is over
             startPage.style.display = "block";
             container.style.display = "none";
             container.style.cursor = "";
-            alert('GAME OVER');
         }
     }
 }
@@ -155,12 +161,6 @@ function detectTargetHit(player, target) {
         //add 50 points to the current score
         let newScore = Number(score.textContent) + 50;
         score.textContent = newScore;
-
-        // if (Number(score.textContent === 500)) {
-        //     ctx.clearRect(0, 0, game.width, game.height);
-        //     score.textContent = 0;
-        //     alert('You WIN');
-        // }
     }
     return hitTest;
 }
@@ -173,7 +173,7 @@ function detectProjHit(player, projectile) {
         mouse.x < projectile.x + projectile.width);
     if (lost) {
         ctx.clearRect(0, 0, game.width, game.height);
-        clearInterval(gameLoop);
+        score.textContent = 0;
     }
     return lost;
 }
@@ -182,7 +182,8 @@ function startGame() {
     displayGameBoard();
     targetSetup();
     projectileSetup();
-    setInterval(gameLoop, 60);
-    setInterval(targetSetup, 4000);
-    setInterval(projectileSetup, 3000);
+    const gameInterval = setInterval(gameLoop, 60);
+    const targetInterval = setInterval(targetSetup, 2000);
+    const projectileInterval = setInterval(projectileSetup, 1000);
+    intervalArray.push(gameInterval, targetInterval, projectileInterval);
 }

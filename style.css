@@ -61,10 +61,12 @@ p {
 
 #instruction {
   font-size: 25px;
+  font-weight: bold;
   position: relative;
   padding-top: 100px;
   text-align: center;
   color: rgb(225, 83, 17);
+
 }
 
 #top,#btm {
