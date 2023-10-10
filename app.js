@@ -5,7 +5,6 @@ const starImage = document.querySelector('#star');
 const sushiImage = document.querySelector('#sushi');
 const game = document.querySelector('#game');
 const score = document.querySelector('#score');
-const status = document.querySelector('#status');
 const container = document.querySelector('#container');
 const ctx = game.getContext('2d');
 const intervalArray = [];

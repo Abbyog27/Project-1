@@ -13,6 +13,11 @@ Goals:
 - [X] ninja will get 50 points for every sushi they hit and add it to score
 - [X] When the ninja collides with the ninja stars it's GAME OVER.
 
+# HOW TO INSTALL 
+1. `Fork` and `Clone` this respository to your local machine
+2. Open `index.html` in your browser to play or
+3. Open the directory in your text editor of choice to view or edit the code
+
 # HOW TO PLAY
  Sushi Ninja begins when by clicking the start game button. Move ninja by moving the mouse throughout the canvas. Player acquires 50 points for every sushi piece that is hit. Beware of the ninja stars coming accross the canvas though! Get as many points collecting sushi while avoiding the ninja stars. Once the player is hit by a ninja star it is game over. 
 
@@ -29,8 +34,8 @@ const starImage = document.querySelector('#star');
 const sushiImage = document.querySelector('#sushi');
 const game = document.querySelector('#game');
 const score = document.querySelector('#score');
-const status = document.querySelector('#status');
 const ctx = game.getContext('2d');
+const intervalArray = [];
 let ninja;
 let star;
 let sushi;
@@ -49,7 +54,6 @@ class Player {
         this.width = width;
         this.height = height;
         this.alive = true;
-        //rendering Ninja on canvas
         this.render = function (x, y) {
             ctx.drawImage(this.playerImage, x, y, this.width, this.height);
         }
@@ -57,7 +61,7 @@ class Player {
 }
 ```
 
-In the game, the player aims to get as many sushi which descend on the canvas every 3 seconds and creating a continuous loop until the game is over using the `setInterval` method.
+In the game, the player aims to get as many sushi which descend on the canvas every 2 seconds and creating a continuous loop until the game is over using the `setInterval` method.
 
 create an array of targets (sushi)
 ```javascript
@@ -73,9 +77,9 @@ function targetSetup() {
     targets.push(target);
 }
 ```
-rendering new sushi every 4 seconds 
+rendering new sushi every 2 seconds 
 ```javascript
- setInterval(targetSetup, 4000);
+const targetInterval = setInterval(targetSetup, 2000);
  ```
 
  The game detects collisions between the characters using the `detectTargetHit` and `detectProjHit` functions. It displays the player's score and updates it as they gather every sushi. It also alerts game over when the player is hit by a ninja star.
@@ -101,5 +105,7 @@ rendering new sushi every 4 seconds
 - add levels (make the sushi and ninja stars move faster) for intermediate and expert levels
 - add sound when the ninja gets the sushi
 - add sound when the ninja gets hit by the ninja star and is game over
+- add "You win" alert when ninja gets a certain amount of points
+- remove any white space from character images
 
 
