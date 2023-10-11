@@ -1,5 +1,4 @@
-# Project-1
-Create a simple fun game
+# Sushi Ninja
 Getting started: 
 1 created a repo in Github and clone.
 2 created an index.html, style.css and app.js files
@@ -20,6 +19,8 @@ Goals:
 
 # HOW TO PLAY
  Sushi Ninja begins when by clicking the start game button. Move ninja by moving the mouse throughout the canvas. Player acquires 50 points for every sushi piece that is hit. Beware of the ninja stars coming accross the canvas though! Get as many points collecting sushi while avoiding the ninja stars. Once the player is hit by a ninja star it is game over. 
+
+![Start Page](<Screen Shot 2023-10-10 at 9.03.28 PM.png>)
 
 # HOW IT WORKS
 This code is an implements a simple 2D game. Sushi Ninja is built using HTML, CSS, and JavaScript. The game uses the HTML5 Canvas to update the game graphics and handle player input. JavaScript is used to manage the game state and updating the player's score. The game is played by controlling a ninja image using the mouse cursor to get sushi to get points while avoiding firing ninja stars. The main logic of the game is handled in a function called `gameLoop`, which is called every 60 milliseconds using the `setInterval` method.
@@ -60,6 +61,7 @@ class Player {
     }
 }
 ```
+![Game](<Screen Shot 2023-10-10 at 9.06.03 PM.png>)
 
 In the game, the player aims to get as many sushi which descend on the canvas every 2 seconds and creating a continuous loop until the game is over using the `setInterval` method.
 
@@ -99,7 +101,21 @@ const targetInterval = setInterval(targetSetup, 2000);
     }
  }
 ```
+Ending the game loop and going back to the start page when it's game over 
+```javascript
+//clearing each interval to end game 
+        intervalArray.forEach(function endGame(interval) {
+            clearInterval(interval);
+        });
+            alert('GAME OVER');
+            //displaying start page once game is over
+            startPage.style.display = "block";
+            container.style.display = "none";
+            container.style.cursor = "";
+        
+```
 
+![Game over alert](<Screen Shot 2023-10-10 at 9.05.32 PM.png>)
 # Unsolved problems and future enhancements
 
 - add levels (make the sushi and ninja stars move faster) for intermediate and expert levels
