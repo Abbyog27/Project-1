@@ -100,6 +100,20 @@ const targetInterval = setInterval(targetSetup, 2000);
         score.textContent = newScore;
     }
  }
+
+
+function detectProjHit(player, projectile) {
+    let lost = (
+        mouse.y + player.height > projectile.y &&
+        mouse.y < projectile.y + projectile.height &&
+        mouse.x + player.width > projectile.x &&
+        mouse.x < projectile.x + projectile.width);
+    if (lost) {
+        ctx.clearRect(0, 0, game.width, game.height);
+        score.textContent = 0;
+    }
+    return lost;
+}
 ```
 Ending the game loop and going back to the start page when it's game over 
 ```javascript
